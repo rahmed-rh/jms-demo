@@ -1,0 +1,9 @@
+apiVersion: enmasse.io/v1beta1
+kind: Address
+metadata:
+  name: jms-example.mysub
+spec:
+  address: mysub
+  type: subscription
+  topic: mytopic
+  plan: standard-small-subscription
