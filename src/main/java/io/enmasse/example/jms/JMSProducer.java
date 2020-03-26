@@ -31,6 +31,7 @@ public class JMSProducer implements Runnable, ExceptionListener {
             MessageProducer messageProducer = session.createProducer(destination);
             while (true) {
                 TextMessage message = session.createTextMessage("JMSHello " + counter.incrementAndGet());
+                message.setLongProperty("_AMQ_SCHED_DELIVERY", System.currentTimeMillis() + 5000);
                 messageProducer.send(message, DeliveryMode.PERSISTENT, Message.DEFAULT_PRIORITY, Message.DEFAULT_TIME_TO_LIVE);
                 Thread.sleep(sleepInterval);
             }

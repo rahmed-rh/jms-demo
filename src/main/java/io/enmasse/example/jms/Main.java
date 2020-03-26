@@ -23,17 +23,18 @@ public class Main {
 
     public static void main(String [] args) throws Exception {
         String topic = "mytopic";
-        String sub = "mytopic::mysub";
-        String host = "messaging-993fc28-enmasse-infra.apps.ulilleen.rhmw-integrations.net";
+        String sub = topic+"::mysub";
+        String queue="myqueue-brokered";
+        String host = "messaging-d3aa540-amq-online-infra.apps.box.it-speeltuin.nl";
         int port = 443;
 
         JmsConnectionFactory connectionFactory = new JmsConnectionFactory();
         connectionFactory.setRemoteURI(String.format("amqps://%s:%d?transport.verifyHost=false&transport.trustAll=true", host, port));
-        connectionFactory.setUsername("test");
-        connectionFactory.setPassword("test");
+        connectionFactory.setUsername("demo-user");
+        connectionFactory.setPassword("password");
 
-        JMSProducer producer = new JMSProducer(connectionFactory, getTopic(topic));
-        JMSConsumer consumer = new JMSConsumer(connectionFactory, getQueue(sub));
+        JMSProducer producer = new JMSProducer(connectionFactory, getQueue(queue));
+        JMSConsumer consumer = new JMSConsumer(connectionFactory, getQueue(queue));
 
         Executor executor = Executors.newFixedThreadPool(2);
         executor.execute(consumer);
